@@ -17,16 +17,28 @@ class contributions(object):
 
 
 
-class github_user(User):
-     def __init__(self, name, email, date_joined):
-         super(github_user, self).__init__(name, email, date_joined)
-         self.repo_list = []
-         self.followers = []
-         self.following = []
-         self.contributions = []
+class GithubUser(User):
+    """GithubUser is a User"""
+    def __init__(self, name, email):
+        super(GithubUser, self).__init__(name, email)
+        self.repos = []
+        self.contributions = []
+        self.followers = []
+        self.following = []
 
-     def add_repo(self, name, date_created):
-         repo = repo(name, date_created)
-         repo_list.append(repo)
+    def follow(self, user):
+        """Follow another user : arg=User object"""
+        user.followers.append(self)
+        self.following.append(user)
 
-     def follow():
+    def __repr__(self):
+        return "<Github user " + self.name + ", " +\
+            self.email + ", " + str(self.date_joined) + ">"
+
+
+stan = GithubUser("Stan", "stan@gmail.com")
+amos = GithubUser("Amos", "amos@gmail.com")
+joan = GithubUser("Joan", "joan@gmail.com")
+srepo = Repository("repo1", stan)
+contrib1 = Contribution(amos, 100, srepo)
+stan.follow(joan)
